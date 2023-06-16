@@ -2,13 +2,12 @@ import { once } from 'events';
 import { lstatSync, createReadStream, createWriteStream } from 'fs';
 import { createInterface } from 'readline';
 
-async function splitAndSort(inputFileName, chunkSize) {
+async function splitAndSort(inputFileName, chunkSize, tmpDir) {
   const tmpFiles = [];
   const lines = [];
   let partOfLine = '';
   let reader, writer;
   const fileSize = lstatSync(inputFileName).size;
-  const tmpDir = `files/tmp`;
   const tmpName = (num) => (`${tmpDir}/tmp_${num}.txt`);
 
   for (let i = 0; (i * chunkSize) < fileSize; i++) {
